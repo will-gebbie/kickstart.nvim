@@ -97,27 +97,18 @@ vim.opt.termguicolors = true
 vim.opt.isfname:append '@-@'
 
 -- [[ Custom Keymaps ]]
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Open Ex File Explorer' })
-
 vim.keymap.set('n', 's', '<nop>')
-
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-
 vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('n', '=ap', "ma=ap'a")
-
 vim.keymap.set('x', '<leader>p', '"_dP')
-
 vim.keymap.set('n', 'Q', '<nop>')
-
-vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace all instances of word under cursor' })
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true, desc = 'Make current file e[x]ecutable' })
-
 -- Remove s keymap for mini.surround
 vim.keymap.set({ 'n', 'v' }, 's', '<nop>')
 
@@ -604,18 +595,8 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
-        basedpyright = {
-
-          settings = {
-
-            basedpyright = {
-
-              analysis = {
-                typeCheckingMode = 'basic',
-              },
-            },
-          },
-        },
+        bashls = {},
+        basedpyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -716,6 +697,8 @@ require('lazy').setup({
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'prettierd' },
+        html = { 'prettierd' },
+        json = { 'prettierd' },
       },
     },
   },
@@ -818,7 +801,7 @@ require('lazy').setup({
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
@@ -838,6 +821,7 @@ require('lazy').setup({
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
+        transparent = true,
       }
 
       -- Load the colorscheme here.
@@ -900,6 +884,7 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+        disable = { 'csv', 'tsv' },
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
@@ -959,6 +944,8 @@ require('lazy').setup({
     },
   },
 })
+
+-- Load snippets
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
