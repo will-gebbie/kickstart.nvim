@@ -21,6 +21,7 @@ function M.toggle_basedpyright_settings(opts)
 
   -- Restart the LSP to apply changes
   vim.lsp.stop_client(client.id)
+  vim.lsp.enable(client.name)
   vim.defer_fn(function()
     vim.cmd 'LspStart basedpyright'
     if not opts.silent then
